@@ -40,7 +40,7 @@ void PrintMidiData(const MidiData &midiData)
 	std::cout << std::format("MIDI MSG {:x} {:x} {:x}", midiData.byte1, midiData.byte2, midiData.byte3) << std::endl;
 }
 
-void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, MidiData* dwInstance, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
+void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, MidiData* midiDataBuffer, DWORD_PTR dwParam1, DWORD_PTR dwParam2)
 {
 
 	switch (wMsg)
@@ -54,14 +54,16 @@ void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, MidiData* dwInstance, DWORD
 		{
 			static int i = 0;
 			MidiData midiData = { 0 };
+
+			midiDataBuffer[128].byte2 = 1;
 			midiData.byte1 = (dwParam1 & 0xFF);
 			midiData.byte2 = ((dwParam1 >> 8) & 0xFF);
 			midiData.byte3 = ((dwParam1 >> 16) & 0xFF);
 			midiData.timestamp = (unsigned long)dwParam2;
-			memcpy(&dwInstance[i], &midiData, sizeof(MidiData));
+			memcpy(&midiDataBuffer[i], &midiData, sizeof(MidiData));
 			i++;
 			i %= 128;
-			dwInstance[128].byte1 = i;
+			midiDataBuffer[128].byte1 = i;
 			//PrintMidiData(midiByte1, midiByte2, midiByte3);
 			break;
 		}
@@ -174,6 +176,10 @@ int main()
 
 	midiInStart(hmidiin);
 
+	//Wait for fist midi command
+	while (midiDataBuffer[128].byte2 == 0)
+		continue;
+
 	while (true)
 	{
 		if (GetAsyncKeyState('q'))
@@ -182,13 +188,20 @@ int main()
 		if (midiDataIndex != midiDataIndexDestination)
 		{
 			//read event here
+			PrintMidiData(midiDataBuffer[midiDataIndex]);
 			midiDataIndex++;
 			midiDataIndex %= 128;
 		}
 
-		std::cout << (int)midiDataIndex << " " << (int)midiDataIndexDestination << std::endl;
+		/*for (int i = 0; i < 16; i++)
+		{
+			PrintMidiData(midiDataBuffer[i]);
+		}
+		system("cls");*/
+
+		//std::cout << (int)midiDataIndex << " " << (int)midiDataIndexDestination << std::endl;
 		midiDataIndexDestination = midiDataBuffer[128].byte1;
-		Sleep(50);
+		//Sleep(50);
 	}
 
 	midiInStop(hmidiin);
