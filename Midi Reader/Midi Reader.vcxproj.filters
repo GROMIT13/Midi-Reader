@@ -5,18 +5,55 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{a75bc5ec-e416-45f7-90c3-91dd7fd420f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{1f1abe38-8238-487e-ba99-b10175d465a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\DataStructures">
+      <UniqueIdentifier>{57144b8a-fdfa-44cd-8b7d-af8dc49ab829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{bb6df2c1-503f-4cd3-9812-b92f398a41fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\DataStructures">
+      <UniqueIdentifier>{2b85dffc-8b49-42f6-9545-b8de8da546d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\GConsole.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\DataStructures\Vec.cpp">
+      <Filter>Source Files\Engine\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\DataStructures\Rect.cpp">
+      <Filter>Source Files\Engine\DataStructures</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Midi\Midi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\GConsole.hpp">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DataStructures\Rect.hpp">
+      <Filter>Header Files\Engine\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DataStructures\Vec.hpp">
+      <Filter>Header Files\Engine\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Log.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Midi\Midi.hpp" />
   </ItemGroup>
 </Project>

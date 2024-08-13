@@ -147,7 +147,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\GConsole.cpp" />
+    <ClCompile Include="Engine\Log.cpp" />
+    <ClCompile Include="Engine\Midi\Midi.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Engine\DataStructures\Vec.cpp" />
+    <ClCompile Include="Engine\DataStructures\Rect.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\GConsole.hpp" />
+    <ClInclude Include="Engine\DataStructures\Rect.hpp" />
+    <ClInclude Include="Engine\DataStructures\Vec.hpp" />
+    <ClInclude Include="Engine\Log.hpp" />
+    <ClInclude Include="Engine\Midi\Midi.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
