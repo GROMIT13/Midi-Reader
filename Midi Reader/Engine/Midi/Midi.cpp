@@ -1,8 +1,4 @@
 #include "Midi.hpp"
-#include <iostream>
-#include <format>
-#include <Windows.h>
-
 
 Midi::Midi()
 {
@@ -66,6 +62,16 @@ Midi::Data* Midi::GetMidiInData()
 	midiDataIndex++;
 	midiDataIndex %= 128;
 	return midiData;
+}
+
+void Midi::PrintData(unsigned char midiByte1, unsigned char midiByte2, unsigned char midiByte3)
+{
+	std::cout << std::format("{:x} {:x} {:x}", midiByte1, midiByte2, midiByte3) << std::endl;
+}
+
+void Midi::PrintData(const Midi::Data& midiData)
+{
+	std::cout << std::format("{:x} {:x} {:x}", midiData.byte1, midiData.byte2, midiData.byte3) << std::endl;
 }
 
 int Midi::ChooseDevice()

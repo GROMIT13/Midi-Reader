@@ -1,6 +1,17 @@
 #pragma once
 
 #include <Windows.h>
+#include <iostream>
+#include <format>
+#include <Windows.h>
+
+struct PianoKeyColor
+{
+	unsigned short whiteRelased;
+	unsigned short whitePressed;
+	unsigned short blackRelased;
+	unsigned short blackPressed;
+};
 
 class Midi
 {
@@ -60,6 +71,9 @@ public:
 	void InClose();
 
 	Midi::Data* GetMidiInData();
+
+	void PrintData(unsigned char midiByte1, unsigned char midiByte2, unsigned char midiByte3);
+	void PrintData(const Midi::Data& midiData);
 
 private:
 	// Scans for MIDI devices, returns device ID choosen by user
