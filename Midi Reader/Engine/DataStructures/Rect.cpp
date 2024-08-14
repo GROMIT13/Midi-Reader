@@ -306,6 +306,59 @@ void Rect::DrawLine(int x0, int y0, int x1, int y1, unsigned short character, un
 	}
 }
 
+void Rect::DrawPiano(int x, int y, int octaves, const PianoKeyColor& keyColor)
+{
+	//Draw Keys
+
+	int keyWidth = 2;
+	DrawPianoKeyWhite1(x + 1,                y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+	DrawPianoKeyWhite2(x + 1 + 1 * keyWidth, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+	DrawPianoKeyBlack (x + 1 + 1 * keyWidth, y + 1, CHARACTER_FULL, keyColor.blackRelased);
+
+	for (int i = 0; i < octaves; i++)
+	{
+		DrawPianoKeyWhite1(x + (2 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+		DrawPianoKeyWhite2(x + (3 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+		DrawPianoKeyBlack (x + (3 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.blackRelased);
+		DrawPianoKeyWhite2(x + (4 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+		DrawPianoKeyBlack (x + (4 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.blackRelased);
+		DrawPianoKeyWhite1(x + (5 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+		DrawPianoKeyWhite2(x + (6 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+		DrawPianoKeyBlack (x + (6 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.blackRelased);
+		DrawPianoKeyWhite2(x + (7 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+		DrawPianoKeyBlack (x + (7 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.blackRelased);
+		DrawPianoKeyWhite2(x + (8 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+		DrawPianoKeyBlack (x + (8 + i * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.blackRelased);
+	}
+	
+	DrawPianoKeyWhite1(x + (2 + octaves * 7) * keyWidth + 1, y + 1, CHARACTER_FULL, keyColor.whiteRelased);
+
+	//Draw Border
+	Draw(x, y, WIDE_SINGLE_PIPE_DOWN_RIGHT, FG_COLOR_WHITE);
+	Draw(x + (3 + octaves * 7) * keyWidth + 1, y, WIDE_SINGLE_PIPE_DOWN_LEFT, FG_COLOR_WHITE);
+	FillArea(x + 1, y, (3 + octaves * 7) * keyWidth, 1, WIDE_SINGLE_PIPE_HORIZONTAL, FG_COLOR_WHITE);
+	FillArea(x + (3 + octaves * 7) * keyWidth + 1, y + 1, 1, 4, WIDE_SINGLE_PIPE_VERTICAL, FG_COLOR_WHITE);
+	FillArea(x, y + 1, 1, 4, WIDE_SINGLE_PIPE_VERTICAL, FG_COLOR_WHITE);
+
+
+}
+
+void Rect::DrawPianoKeyWhite1(int x, int y, unsigned short character, unsigned short color)
+{
+	FillArea(x, y, 2, 4, character, color);
+}
+
+void Rect::DrawPianoKeyWhite2(int x, int y, unsigned short character, unsigned short color)
+{
+	FillArea(x, y + 2, 1, 2, character, color);
+	FillArea(x + 1, y, 1, 4, character, color);
+}
+
+void Rect::DrawPianoKeyBlack(int x, int y, unsigned short character, unsigned short color)
+{
+	FillArea(x, y, 1, 2, character, color);
+}
+
 void Rect::UnsecureDraw(int x, int y, unsigned short character, unsigned short color)
 {
 	buffer[y * short(dimension->x) + x].Char.UnicodeChar = character;

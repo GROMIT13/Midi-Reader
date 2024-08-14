@@ -4,6 +4,7 @@
 #include <optional>
 #include "Vec.hpp"
 #include "..\Log.hpp"
+#include "..\Midi\Midi.hpp"
 
 class Vec2;
 
@@ -53,6 +54,30 @@ enum CHARACTER_TYPE
 	CHARACTER_QUARTER = 0x2591
 };
 
+enum PIPE_CHARACTER
+{
+	DOUBLE_PIPE_HORIZONTAL = 0x2550,
+	DOUBLE_PIPE_VERTICAL = 0x2551,
+	DOUBLE_PIPE_DOWN_RIGHT = 0x2554,
+	DOUBLE_PIPE_DOWN_LEFT = 0x2557,
+	DOUBLE_PIPE_UP_RIGHT = 0x255A,
+	DOUBLE_PIPE_UP_LEFT = 0x255D,
+
+	SINGLE_PIPE_HORIZONTAL = 0x2500,
+	SINGLE_PIPE_VERTICAL = 0x2502,
+	SINGLE_PIPE_DOWN_RIGHT = 0x250C,
+	SINGLE_PIPE_DOWN_LEFT = 0x2510,
+	SINGLE_PIPE_UP_RIGHT = 0x2514,
+	SINGLE_PIPE_UP_LEFT = 0x2518,
+
+	WIDE_SINGLE_PIPE_HORIZONTAL = 0x2501,
+	WIDE_SINGLE_PIPE_VERTICAL = 0x2503,
+	WIDE_SINGLE_PIPE_DOWN_RIGHT = 0x250F,
+	WIDE_SINGLE_PIPE_DOWN_LEFT = 0x2513,
+	WIDE_SINGLE_PIPE_UP_RIGHT = 0x2517,
+	WIDE_SINGLE_PIPE_UP_LEFT = 0x251B,
+};
+
 class Rect
 {
 private:
@@ -95,6 +120,12 @@ public:
 	void DrawString(int x, int y, const std::string& string, unsigned short color);
 	void DrawLine(int x0, int y0, int x1, int y1);
 	void DrawLine(int x0, int y0, int x1, int y1, unsigned short character, unsigned short color);
+
+	//Draw Piano Keys
+	void DrawPiano(int x, int y, int octaves, const PianoKeyColor& keyColor);
+	void DrawPianoKeyWhite1(int x, int y, unsigned short character, unsigned short color);
+	void DrawPianoKeyWhite2(int x, int y, unsigned short character, unsigned short color);
+	void DrawPianoKeyBlack(int x, int y, unsigned short character, unsigned short color);
 
 private:
 	void UnsecureDraw(int x, int y, unsigned short character, unsigned short color);
