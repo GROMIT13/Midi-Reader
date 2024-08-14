@@ -20,5 +20,4 @@ public:
 	void UpdateScreen();
 	void ShowConsoleCursor(bool isVisible);
 	void SetTitle(const std::string& title);
-
 };
