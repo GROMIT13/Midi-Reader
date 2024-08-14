@@ -4,56 +4,25 @@
 #include "Engine/GConsole.hpp"
 #include "Engine/Midi/Midi.hpp"
 
-enum MidiEvent
-{
-	NoteOff = 0x80,
-	NoteOn = 0x90,
-	PolyphonicAftertouch = 0xA0,
-	ControlOrModeChange = 0xB0,
-	ProgramChange = 0xC0,
-	ChannelAftertouch = 0xD0,
-	PitchBendChange = 0xE0,
-	SystemExclusive = 0xF0,
-};
-
-struct MidiNote
-{
-	bool isOn;
-	unsigned char number;
-	unsigned char velocity;
-};
-
-struct MidiData
-{
-	unsigned char byte1;
-	unsigned char byte2;
-	unsigned char byte3;
-	unsigned long timestamp;
-};
-
-void PrintData(unsigned char midiByte1, unsigned char midiByte2, unsigned char midiByte3)
-{
-	std::cout << std::format("MIDI MSG {:x} {:x} {:x}", midiByte1, midiByte2, midiByte3) << std::endl;
-}
-
-void PrintData(const Midi::Data &midiData)
-{
-	std::cout << std::format("MIDI MSG {:x} {:x} {:x}", midiData.byte1, midiData.byte2, midiData.byte3) << std::endl;
-}
-
 int main()
 {
-	GConsole screen("MIDI Reader",120,20,10,20);
+	GConsole screen("MIDI Reader", 120, 20, 11, 22);
 	Midi midi;
+	PianoKeyColor pianoColor = { FG_COLOR_WHITE, FG_COLOR_AQUA, FG_COLOR_BLACK, FG_COLOR_BLUE };
+	Midi::Note* notes = new Midi::Note[128];
+
 
 	screen.ShowConsoleCursor(true);
 
-	if (midi.InOpen() == -1) {
+	if (midi.InOpen() == -1) 
+	{
 		std::cin.get();
 		return 0;
 	}
 
 	screen.ShowConsoleCursor(false);
+	screen.DrawPiano(4, 10, 7, pianoColor);
+	screen.UpdateScreen();
 
 	while (!GetAsyncKeyState(VK_ESCAPE))
 	{
@@ -61,9 +30,44 @@ int main()
 
 		if (midiData == nullptr)
 			continue;
-		
 
-		screen.UpdateScreen();
+		midi.PrintData(*midiData);
+
+		if ((midiData->byte1 & 0xF0) == Midi::Event::NoteOff)
+		{
+
+		}
+		else if ((midiData->byte1 & 0xF0) == Midi::Event::NoteOn)
+		{
+		
+		}
+		else if ((midiData->byte1 & 0xF0) == Midi::Event::PolyphonicAftertouch)
+		{
+
+		}
+		else if ((midiData->byte1 & 0xF0) == Midi::Event::ControlOrModeChange)
+		{
+
+		}
+		else if ((midiData->byte1 & 0xF0) == Midi::Event::ProgramChange)
+		{
+
+		}
+		else if ((midiData->byte1 & 0xF0) == Midi::Event::ChannelAftertouch)
+		{
+
+		}
+		else if ((midiData->byte1 & 0xF0) == Midi::Event::PitchBendChange)
+		{
+
+		}
+		else if ((midiData->byte1 & 0xF0) == Midi::Event::SystemExclusive)
+		{
+
+		}
+
+		
+		//screen.UpdateScreen();
 	}
 
 }
