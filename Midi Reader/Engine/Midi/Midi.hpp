@@ -46,8 +46,9 @@ public:
 	struct Note
 	{
 		State state;
-		unsigned char number;
 		unsigned char velocity;
+
+		Note();
 	};
 
 private:
@@ -56,6 +57,7 @@ private:
 	bool isFirstEventInitialized; // check if data was initialized in first element of "midiDataBuffer"
 	unsigned char midiDataIndex;  // stores index of last read midi event + 1
 	unsigned char midiDataIndexDestination; // stores index of last updated variable in "midiDataBuffer"
+	bool isSustainPedalPressed;
 
 public:
 	Midi();
@@ -64,16 +66,23 @@ public:
 	// Open MIDI input device specified by user
 	// Retuns -1 on error
 	int InOpen();
-
 	
 	// Closes current MIDI input device
 	// NOTE : This function is called on class destruction
 	void InClose();
 
+	// Return pointer to last occurred midi input event
+	// if multiple events occur use this function multiple times
+	// if all Data was read this functions return nullptr
 	Midi::Data* GetMidiInData();
 
 	void PrintData(unsigned char midiByte1, unsigned char midiByte2, unsigned char midiByte3);
 	void PrintData(const Midi::Data& midiData);
+
+	bool GetIsSustainPedalPressed();
+
+	// Use only when you know (midiData.byte1 & 0xF0) == Midi::Event::ControlOrModeChange
+	void SetIsSustainPedalPressed(unsigned char midiDataByte2, unsigned char midiDataByte3);
 
 private:
 	// Scans for MIDI devices, returns device ID choosen by user

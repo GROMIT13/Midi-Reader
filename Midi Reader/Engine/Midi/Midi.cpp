@@ -8,6 +8,7 @@ Midi::Midi()
 	isFirstEventInitialized = false;
 	midiDataIndex = 0;
 	midiDataIndexDestination = 0;
+	isSustainPedalPressed = false;
 }
 
 Midi::~Midi()
@@ -72,6 +73,17 @@ void Midi::PrintData(unsigned char midiByte1, unsigned char midiByte2, unsigned 
 void Midi::PrintData(const Midi::Data& midiData)
 {
 	std::cout << std::format("{:x} {:x} {:x}", midiData.byte1, midiData.byte2, midiData.byte3) << std::endl;
+}
+
+bool Midi::GetIsSustainPedalPressed()
+{
+	return isSustainPedalPressed;
+}
+
+void Midi::SetIsSustainPedalPressed(unsigned char midiDataByte2, unsigned char midiDataByte3)
+{
+	if (midiDataByte2 == 0x40)
+		isSustainPedalPressed = midiDataByte3 >= 64 ? true : false;
 }
 
 int Midi::ChooseDevice()
@@ -182,3 +194,7 @@ static void CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, Midi::Data* midiData
 		return;
 	}
 }
+
+Midi::Note::Note()
+	:state(State::Off), velocity(0)
+{}
