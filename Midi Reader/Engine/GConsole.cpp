@@ -1,8 +1,13 @@
 #include "GConsole.hpp"
 
-//TO DO: fix - Draw function does not work;
+//GConsole::GConsole(const std::string& title, short screenWidth, short screenHeight, short fontWidth, short fontHeight)
+//	:Rect(0, 0, screenWidth, screenHeight)
+//{
+//	const wchar_t* font = L"Consolas";
+//	GConsole(title, screenWidth, screenHeight, fontWidth, fontHeight, font);
+//}
 
-GConsole::GConsole(const std::string& title, short screenWidth, short screenHeight, short fontWidth, short fontHeight)
+GConsole::GConsole(const std::string& title, short screenWidth, short screenHeight, short fontWidth, short fontHeight, const wchar_t* font)
 	:Rect(0, 0, screenWidth, screenHeight)
 {
 	Log log("ConsoleLog.txt");
@@ -15,7 +20,7 @@ GConsole::GConsole(const std::string& title, short screenWidth, short screenHeig
 	consoleFont->dwFontSize.Y = fontHeight;
 	consoleFont->FontFamily = FW_DONTCARE;
 	consoleFont->FontWeight = FW_NORMAL;
-	wcscpy_s(consoleFont->FaceName, L"Consolas");
+	wcscpy_s(consoleFont->FaceName, font);
 
 	//Get console Handle
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

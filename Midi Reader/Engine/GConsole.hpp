@@ -6,6 +6,8 @@
 #include "DataStructures/Vec.hpp"
 #include "Log.hpp"
 
+// TO DO : Add GConsole constructor with no font as parameter
+
 class GConsole : public Rect
 {
 private:
@@ -15,7 +17,8 @@ private:
 	COORD consoleBufferSzie;
 
 public:
-	GConsole(const std::string& title, short screenWidth, short screenHeight, short fontWidth, short fontHeight);
+	//GConsole(const std::string& title, short screenWidth, short screenHeight, short fontWidth, short fontHeight);
+	GConsole(const std::string& title, short screenWidth, short screenHeight, short fontWidth, short fontHeight, const wchar_t* font);
 	~GConsole();
 	void UpdateScreen();
 	void ShowConsoleCursor(bool isVisible);
