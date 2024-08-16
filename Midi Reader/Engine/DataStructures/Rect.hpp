@@ -78,6 +78,13 @@ enum PIPE_CHARACTER
 	WIDE_SINGLE_PIPE_UP_LEFT = 0x251B,
 };
 
+enum class Accidental : unsigned short
+{
+	Flat = 0x266D,
+	Natural = 0x266E,
+	Sharp = 0x266F
+};
+
 class Rect
 {
 private:
@@ -121,11 +128,12 @@ public:
 	void DrawLine(int x0, int y0, int x1, int y1);
 	void DrawLine(int x0, int y0, int x1, int y1, unsigned short character, unsigned short color);
 
-	//Draw Piano Keys
+	//Draw Piano
 	void DrawPiano(int x, int y, int octaves, const PianoKeyColor& keyColor);
 	void DrawPianoKeyWhite1(int x, int y, unsigned short character, unsigned short color);
 	void DrawPianoKeyWhite2(int x, int y, unsigned short character, unsigned short color);
 	void DrawPianoKeyBlack(int x, int y, unsigned short character, unsigned short color);
+	void DrawNoteName(int x, int y, unsigned char noteNumber, unsigned short color);
 
 private:
 	void UnsecureDraw(int x, int y, unsigned short character, unsigned short color);

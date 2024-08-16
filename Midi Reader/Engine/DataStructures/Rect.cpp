@@ -359,6 +359,36 @@ void Rect::DrawPianoKeyBlack(int x, int y, unsigned short character, unsigned sh
 	FillArea(x, y, 1, 2, character, color);
 }
 
+void Rect::DrawNoteName(int x, int y, unsigned char noteNumber, unsigned short color)
+{
+	unsigned short noteName[3];
+	unsigned short key = noteNumber % 12;
+	unsigned short octaveNumber = ((noteNumber - key) / 12) - 1;
+	switch (key)
+	{
+	case  0: noteName[0] = L'C'; noteName[1] = L'-';							  break;
+	case  1: noteName[0] = L'C'; noteName[1] = (unsigned short)Accidental::Sharp; break;
+	case  2: noteName[0] = L'D'; noteName[1] = L'-';							  break;
+	case  3: noteName[0] = L'D'; noteName[1] = (unsigned short)Accidental::Sharp; break;
+	case  4: noteName[0] = L'E'; noteName[1] = L'-';							  break;
+	case  5: noteName[0] = L'F'; noteName[1] = L'-';							  break;
+	case  6: noteName[0] = L'F'; noteName[1] = (unsigned short)Accidental::Sharp; break;
+	case  7: noteName[0] = L'G'; noteName[1] = L'-';							  break;
+	case  8: noteName[0] = L'G'; noteName[1] = (unsigned short)Accidental::Sharp; break;
+	case  9: noteName[0] = L'A'; noteName[1] = L'-';							  break;
+	case 10: noteName[0] = L'A'; noteName[1] = (unsigned short)Accidental::Sharp; break;
+	case 11: noteName[0] = L'B'; noteName[1] = L'-';							  break;
+
+	default:
+		break;
+	}
+	noteName[2] = (octaveNumber);
+
+	Draw(x    , y, noteName[0]);
+	Draw(x + 1, y, noteName[1]);
+	Draw(x + 2, y, noteName[2] + 48);
+}
+
 void Rect::UnsecureDraw(int x, int y, unsigned short character, unsigned short color)
 {
 	buffer[y * short(dimension->x) + x].Char.UnicodeChar = character;
