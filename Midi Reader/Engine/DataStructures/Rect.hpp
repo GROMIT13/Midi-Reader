@@ -133,6 +133,7 @@ public:
 	void DrawPianoKeyWhite1(int x, int y, unsigned short character, unsigned short color);
 	void DrawPianoKeyWhite2(int x, int y, unsigned short character, unsigned short color);
 	void DrawPianoKeyBlack(int x, int y, unsigned short character, unsigned short color);
+	void DrawPianoKeyNote(int x, int y, unsigned short character, unsigned short whiteKeycolor, unsigned short blackKeycolor, unsigned char noteNumber);
 	void DrawNoteName(int x, int y, unsigned char noteNumber, unsigned short color);
 
 private:

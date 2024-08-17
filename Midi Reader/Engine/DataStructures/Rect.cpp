@@ -359,6 +359,38 @@ void Rect::DrawPianoKeyBlack(int x, int y, unsigned short character, unsigned sh
 	FillArea(x, y, 1, 2, character, color);
 }
 
+void Rect::DrawPianoKeyNote(int x, int y, unsigned short character, unsigned short whiteKeycolor, unsigned short blackKeycolor, unsigned char noteNumber)
+{
+	int keyWidth = 2;
+	unsigned short key = noteNumber % 12;
+	unsigned short octaveNumber = ((noteNumber - key) / 12) - 1;
+
+	if (octaveNumber == 0 && key == 9)
+	{
+		DrawPianoKeyWhite1(x + keyWidth * (5 + 7 * octaveNumber), y, character, whiteKeycolor);
+		return;
+	}
+
+	switch (key)
+	{
+	case  0: DrawPianoKeyWhite1(x + keyWidth * (0 + 7 * octaveNumber), y, character, whiteKeycolor); break; //C
+	case  1: DrawPianoKeyBlack (x + keyWidth * (1 + 7 * octaveNumber), y, character, blackKeycolor); break; //C#
+	case  2: DrawPianoKeyWhite2(x + keyWidth * (1 + 7 * octaveNumber), y, character, whiteKeycolor); break; //D
+	case  3: DrawPianoKeyBlack (x + keyWidth * (2 + 7 * octaveNumber), y, character, blackKeycolor); break; //D#
+	case  4: DrawPianoKeyWhite2(x + keyWidth * (2 + 7 * octaveNumber), y, character, whiteKeycolor); break; //E
+	case  5: DrawPianoKeyWhite1(x + keyWidth * (3 + 7 * octaveNumber), y, character, whiteKeycolor); break; //F
+	case  6: DrawPianoKeyBlack (x + keyWidth * (4 + 7 * octaveNumber), y, character, blackKeycolor); break; //F#
+	case  7: DrawPianoKeyWhite2(x + keyWidth * (4 + 7 * octaveNumber), y, character, whiteKeycolor); break; //G
+	case  8: DrawPianoKeyBlack (x + keyWidth * (5 + 7 * octaveNumber), y, character, blackKeycolor); break; //G#
+	case  9: DrawPianoKeyWhite2(x + keyWidth * (5 + 7 * octaveNumber), y, character, whiteKeycolor); break; //A
+	case 10: DrawPianoKeyBlack (x + keyWidth * (6 + 7 * octaveNumber), y, character, blackKeycolor); break; //A#
+	case 11: DrawPianoKeyWhite2(x + keyWidth * (6 + 7 * octaveNumber), y, character, whiteKeycolor); break; //B
+
+	default:
+		break;
+	}
+}
+
 void Rect::DrawNoteName(int x, int y, unsigned char noteNumber, unsigned short color)
 {
 	unsigned short noteName[3];
