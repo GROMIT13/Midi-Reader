@@ -31,8 +31,7 @@ int main()
 
 	screen.ShowConsoleCursor(false);
 	screen.Fill(CHARACTER_FULL, FG_COLOR_BLACK); // value 0 in DejaVU Sans Mono looks weird for some reason
-	for (int i = 0; i < 16; i++)
-		screen.Draw(i, 0, CHARACTER_FULL, i);
+
 	screen.DrawPiano(7, screen.GetDimension().y - 5, 7, pianoColor);
 	screen.UpdateScreen();
 
@@ -65,29 +64,32 @@ int main()
 		}
 		else if ((midiData->byte1 & 0xF0) == Midi::Event::NoteOn)
 		{
+			if (notes[midiData->byte2].state != Midi::State::Sustain)
+			{
+				//Draw Key
+				screen.DrawPianoKeyNote(-2, screen.GetDimension().y - 4, CHARACTER_FULL, pianoColor.whitePressed, pianoColor.blackPressed, midiData->byte2);
+
+				//Set activeNoteList
+				if (activeNoteList.size() == 0)
+					activeNoteList.push_back(midiData->byte2);
+				else
+				{
+					int i;
+					for (i = 0; i < activeNoteList.size(); i++)
+					{
+						if (activeNoteList[i] < midiData->byte2)
+						{
+							activeNoteList.insert(activeNoteList.begin() + i, midiData->byte2);
+							break;
+						}
+					}
+					if (i == activeNoteList.size())
+						activeNoteList.push_back(midiData->byte2);
+				}
+			}
+
 			notes[midiData->byte2].state = Midi::State::On;
 			notes[midiData->byte2].velocity = midiData->byte3;
-
-			//Draw Key
-			screen.DrawPianoKeyNote(-2, screen.GetDimension().y - 4, CHARACTER_FULL, pianoColor.whitePressed, pianoColor.blackPressed, midiData->byte2);
-
-			//Set activeNoteList
-			if (activeNoteList.size() == 0)
-				activeNoteList.push_back(midiData->byte2);
-			else
-			{
-				int i;
-				for (i = 0; i < activeNoteList.size(); i++)
-				{
-					if (activeNoteList[i] < midiData->byte2)
-					{
-						activeNoteList.insert(activeNoteList.begin() + i, midiData->byte2);
-						break;
-					}
-				}
-				if (i == activeNoteList.size())
-					activeNoteList.push_back(midiData->byte2);
-			}
 		}
 		else if ((midiData->byte1 & 0xF0) == Midi::Event::PolyphonicAftertouch)
 		{
@@ -106,6 +108,7 @@ int main()
 				{
 					if (notes[activeNoteList[i]].state == Midi::State::Sustain)
 					{
+						notes[activeNoteList[i]].state = Midi::State::Off;
 						screen.DrawPianoKeyNote(-2, screen.GetDimension().y - 4, CHARACTER_FULL, pianoColor.whiteRelased, pianoColor.blackRelased, activeNoteList[i]);
 						activeNoteList.erase(activeNoteList.begin() + i);
 						screen.DrawString(3, 1 + activeNoteList.size(), "   ");
